@@ -13,6 +13,9 @@ public class Requests {
         String serverid;
         BigDecimal time;
         Servers.Server server;
+        Request priorRequest = null; 
+        List<Request> feedSet = new ArrayList<>();
+        int tindex; //  sort all requests by time
         public Request(String time, Servers.Server server){
             this.server = server;
             this.serverid = server.sid;
@@ -30,6 +33,30 @@ public class Requests {
         public String getServerid() {
             return serverid;
         }
+
+        public int getTIndex(){
+            return this.tindex;
+        }
+
+        public void setTIndex(int tindex){
+            this.tindex = tindex;
+        }
+
+        public List<Request> getFeedSet(){
+            return this.feedSet;
+        }
+
+        public Request getPriorRequest(){
+            return this.priorRequest;
+        }
+
+        public void setPriorRequest(Request r){
+            this.priorRequest = r;
+        }
+
+        public void addFeedSet(Request r){
+            this.feedSet.add(r);
+        }
     }
 
     public List<Request> readRequests(String requestfile, Map<String, Servers.Server> serverMap){
@@ -37,7 +64,7 @@ public class Requests {
         List<Request> lr = new ArrayList<>();
         for(String line : lines){
             String[] ls = line.split(",");
-            lr.add(new Request(ls[0],serverMap.get(ls[1])));
+            lr.add(new Request(ls[1],serverMap.get(ls[0])));
         }
         lr.sort(new Comparator<Request>() {
             @Override
@@ -45,6 +72,11 @@ public class Requests {
                 return o0.getTime().compareTo(o2.getTime());
             }
         });
+        int tindex = 0;
+        for(Request i:lr){
+            i.setTIndex(tindex);
+            tindex++;
+        }
         return lr;
     }
 }

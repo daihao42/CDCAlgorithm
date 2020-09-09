@@ -10,10 +10,14 @@ import java.util.Map;
 public class Servers {
     public class Server{
         public String sid;
+        // unit caching cost
         public BigDecimal cost_unit;
         public Server(String sid,String cu){
             this.sid = sid;
             this.cost_unit = new BigDecimal(cu);
+        }
+        public BigDecimal getCostUnit(){
+            return this.cost_unit;
         }
     }
 
