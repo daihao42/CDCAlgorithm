@@ -64,6 +64,7 @@ out/
 .idea/
 **/out/
 **/.idea/
+**/.vscode/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

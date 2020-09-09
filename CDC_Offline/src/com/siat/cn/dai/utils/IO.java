@@ -16,6 +16,7 @@ public class IO {
             while(null != (strLine = bufferedReader.readLine())){
                 res.add(strLine);
             }
+            bufferedReader.close();
             return res;
         }catch(Exception e) {
             e.printStackTrace();

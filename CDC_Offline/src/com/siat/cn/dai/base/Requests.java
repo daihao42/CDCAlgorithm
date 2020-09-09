@@ -33,7 +33,8 @@ public class Requests {
     }
 
     public List<Request> readRequests(String requestfile, Map<String, Servers.Server> serverMap){
-        List<String> lines = IO.readFileByLine(requestfile        List<Request> lr = new ArrayList<>();
+        List<String> lines = IO.readFileByLine(requestfile);
+        List<Request> lr = new ArrayList<>();
         for(String line : lines){
             String[] ls = line.split(",");
             lr.add(new Request(ls[0],serverMap.get(ls[1])));
