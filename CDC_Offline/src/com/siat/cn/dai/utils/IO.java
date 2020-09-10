@@ -1,8 +1,6 @@
 package com.siat.cn.dai.utils;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,4 +21,22 @@ public class IO {
             return null;
         }
     }
+
+    public static void writeFile(List<String> content,String strFile){
+        try {
+            File file = new File(strFile);
+            if(!file.exists()){
+                file.createNewFile();
+            }
+            BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+            for(String line: content) {
+                    bufferedWriter.write(line+"\n");
+            }
+            bufferedWriter.close();
+        }catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

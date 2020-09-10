@@ -1,14 +1,14 @@
 package com.siat.cn.dai.algorithm;
 
-import com.siat.cn.dai.base.Requests.Request;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class DP {
+import com.siat.cn.dai.base.Requests.Request;
+
+public class DP_BAK {
 
     private BigDecimal lambda;
     private BigDecimal beta;
@@ -18,7 +18,7 @@ public class DP {
     private List<BigDecimal> optC = new ArrayList<>();
     private List<Request> request_list;
 
-    public DP(BigDecimal lambda, BigDecimal beta, List<Request> request_list){
+    public DP_BAK(BigDecimal lambda, BigDecimal beta, List<Request> request_list){
         this.lambda = lambda;
         this.beta = beta;
         this.request_list = request_list;
