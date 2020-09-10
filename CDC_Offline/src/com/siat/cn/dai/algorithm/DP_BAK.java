@@ -154,12 +154,12 @@ public class DP_BAK {
                           .add(this.CachingCost(now.getServer().getCostUnit().min(j.getServer().getCostUnit()),now.getTime().subtract(j.getTime())))
                           .add(this.costBoundB.get(now.getTIndex() - 1).subtract(this.costBoundB.get(j.getTIndex())))
                     );
-            // lambda + D(k) + mu * delta_t(i,k) + B(k,i-1)
+            // lambda + D(k) + mu * delta_t(i,j) + B(k,i-1)
             List<Request> pi_list = this.getCoverSet(j, now);
             for(Request k:pi_list){
                 calcs.add(this.TransferringCost()
                               .add(this.semiOptD.get(k.getTIndex()))
-                              .add(this.CachingCost(now.getServer().getCostUnit().min(k.getServer().getCostUnit()), now.getTime().subtract(k.getTime())))
+                              .add(this.CachingCost(now.getServer().getCostUnit().min(j.getServer().getCostUnit()), now.getTime().subtract(j.getTime())))
                               .add(this.costBoundB.get(now.getTIndex() - 1).subtract(this.costBoundB.get(k.getTIndex())))
                         );
             }
