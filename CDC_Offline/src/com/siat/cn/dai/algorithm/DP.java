@@ -64,7 +64,8 @@ public class DP {
      */
     private List<BigDecimal> calc_CostBoundB(List<Request> requests){
         List<BigDecimal> res = new ArrayList<>();
-        res.add(new BigDecimal(0));
+        BigDecimal sum = new BigDecimal(0);
+        res.add(sum);
         Map<String, Request> lastReq = new HashMap<String, Request>();
         for(Request i : requests){
             // refer to feedset and prior
@@ -78,11 +79,13 @@ public class DP {
 
             // add caching cost or transferring cost
             if(lastReq.get(i.getServerid()) == null){
-                res.add(this.TransferringCost());
+                sum = sum.add(this.TransferringCost());
+                res.add(sum);
             }
             else {
                 BigDecimal caching_cost = CachingCost(i.getServer().cost_unit,i.getTime().subtract(lastReq.get(i.getServerid()).getTime()));
-                res.add(caching_cost.compareTo(TransferringCost()) < 0 ? caching_cost:TransferringCost());
+                sum = sum.add(caching_cost.compareTo(TransferringCost()) < 0 ? caching_cost:TransferringCost());
+                res.add(sum);
             }
             lastReq.put(i.getServerid(),i);
         }

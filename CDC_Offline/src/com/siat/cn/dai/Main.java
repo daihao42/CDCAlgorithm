@@ -14,7 +14,7 @@ public class Main {
         Servers servers = new Servers();
         Map<String, Servers.Server> servers_unit = servers.readServer("data/servers_unit.csv");
         List<Requests.Request> ls = rs.readRequests("data/requests.txt", servers_unit);
-        DP dp = new DP(new BigDecimal(1),new BigDecimal(1),ls);
+        DP dp = new DP(new BigDecimal(1),new BigDecimal(2),ls);
         System.out.println(dp.solution());
         System.out.println();
         //for (re)
