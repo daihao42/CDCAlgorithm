@@ -21,8 +21,8 @@ def randomUnit(servers,low,high):
     return res
 server_unit = randomUnit(servers.tolist(),1,5)
 
-#pd.DataFrame(dict(server_unit),index=[0]).T.to_csv("servers_unit.csv",header=None)
-test = pd.DataFrame(dict(server_unit),index=[0]).T
-test[0] = 2
-test.loc[min(test.index)] = 1
-test.to_csv("servers_unit.csv",header=None)
+pd.DataFrame(dict(server_unit),index=[0]).T.to_csv("servers_unit.csv",header=None)
+#test = pd.DataFrame(dict(server_unit),index=[0]).T
+#test[0] = 2
+#test.loc[min(test.index)] = 1
+#test.to_csv("servers_unit.csv",header=None)

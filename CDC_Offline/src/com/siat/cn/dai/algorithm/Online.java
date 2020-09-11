@@ -118,7 +118,7 @@ public class Online {
             max_time = max_time.max(r.getTime());
         }
         return max_time.add(
-                this.beta.add(this.lambda).multiply(new BigDecimal(2)).divide(min_unit)
+                this.beta.add(this.lambda).multiply(new BigDecimal(2)).divide(min_unit,precision,BigDecimal.ROUND_UP)
         );
     }
 
@@ -180,7 +180,7 @@ public class Online {
                 }
                 addCost(cost);
                 this.last_request_time = itime;
-                this.expire_time = UploadingCost().divide(this.server.getCostUnit());
+                this.expire_time = UploadingCost().divide(this.server.getCostUnit(),precision,BigDecimal.ROUND_UP);
                 this.cached = Boolean.TRUE;
             }
             if (this.expire_time.compareTo(time_unit) > 0) {
@@ -226,7 +226,7 @@ public class Online {
                 }
                 addCost(cost);
                 this.last_request_time = itime;
-                this.expire_time = TransferringCost().divide(this.server.getCostUnit());
+                this.expire_time = TransferringCost().divide(this.server.getCostUnit(),precision,BigDecimal.ROUND_UP);
                 this.cached = Boolean.TRUE;
             }
             if (this.expire_time.compareTo(time_unit) > 0) {
@@ -240,9 +240,9 @@ public class Online {
         @Override
         public void Delete(BigDecimal itime) {
             BigDecimal cost;
-            if ((cached_servers == 1) && (itime.subtract(this.last_request_time).compareTo(TransferringCost().divide(this.server.getCostUnit())) <= 0)){
-                this.expire_time = UploadingCost().divide(this.server.getCostUnit()).subtract(
-                                                                TransferringCost().divide(this.server.getCostUnit())
+            if ((cached_servers == 1) && (itime.subtract(this.last_request_time).compareTo(TransferringCost().divide(this.server.getCostUnit(),precision,BigDecimal.ROUND_UP)) <= 0)){
+                this.expire_time = UploadingCost().divide(this.server.getCostUnit(),precision,BigDecimal.ROUND_UP).subtract(
+                                                                TransferringCost().divide(this.server.getCostUnit(),precision,BigDecimal.ROUND_UP)
                                                                 );
             }else {
                 cost = CachingCost(this.server.getCostUnit(), itime.subtract(this.last_request_time));
@@ -285,7 +285,7 @@ public class Online {
                 }
                 addCost(cost);
                 this.last_request_time = itime;
-                this.expire_time = TransferringCost().divide(this.server.getCostUnit());
+                this.expire_time = TransferringCost().divide(this.server.getCostUnit(),precision,BigDecimal.ROUND_UP);
                 this.cached = Boolean.TRUE;
             }
             if (this.expire_time.compareTo(time_unit) > 0) {
@@ -300,11 +300,11 @@ public class Online {
         public void Delete(BigDecimal itime) {
             //System.out.println("call 3 delete"+itime);
             BigDecimal cost;
-            if ((cached_servers == 1) && (itime.subtract(last_request_time).compareTo(TransferringCost().divide(this.server.getCostUnit())) <= 0)){
-                this.expire_time = TransferringCost().divide(this.server.getCostUnit());
+            if ((cached_servers == 1) && (itime.subtract(last_request_time).compareTo(TransferringCost().divide(this.server.getCostUnit(),precision,BigDecimal.ROUND_UP)) <= 0)){
+                this.expire_time = TransferringCost().divide(this.server.getCostUnit(),precision,BigDecimal.ROUND_UP);
             }else if((cached_servers == 1) &&
                      (itime.subtract(last_request_time).compareTo(
-                             TransferringCost().multiply(new BigDecimal(2)).divide(this.server.getCostUnit())
+                             TransferringCost().multiply(new BigDecimal(2)).divide(this.server.getCostUnit(),precision,BigDecimal.ROUND_UP)
                      ) <= 0) &&
                      (!this.server.sid.equals(minCostUnitServer.server.sid))
                     ){
@@ -313,15 +313,15 @@ public class Online {
                 this.cached = Boolean.FALSE;
                 minCostUnitServer.cached = Boolean.TRUE;
                 minCostUnitServer.last_request_time = itime;
-                minCostUnitServer.expire_time = UploadingCost().subtract(TransferringCost().multiply(new BigDecimal(2))).divide(minCostUnitServer.server.getCostUnit());
+                minCostUnitServer.expire_time = UploadingCost().subtract(TransferringCost().multiply(new BigDecimal(2))).divide(minCostUnitServer.server.getCostUnit(),precision,BigDecimal.ROUND_UP);
                 this.expire_time = new BigDecimal(0);
             }else if((cached_servers == 1)
                     && (itime.subtract(last_request_time)
-                            .compareTo(TransferringCost().multiply(new BigDecimal(2)).divide(server.getCostUnit()))
+                            .compareTo(TransferringCost().multiply(new BigDecimal(2)).divide(server.getCostUnit(),precision,BigDecimal.ROUND_UP))
                             <= 0)
                     && (this.server.sid.equals(minCostUnitServer.server.sid)
                     )){
-                expire_time = UploadingCost().subtract(TransferringCost().multiply(new BigDecimal(2))).divide(server.getCostUnit());
+                expire_time = UploadingCost().subtract(TransferringCost().multiply(new BigDecimal(2))).divide(server.getCostUnit(),precision,BigDecimal.ROUND_UP);
             }
             else{
                 cost = CachingCost(this.server.getCostUnit(), itime.subtract(this.last_request_time));
