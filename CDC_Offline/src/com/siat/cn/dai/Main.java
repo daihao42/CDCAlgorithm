@@ -27,7 +27,7 @@ public class Main {
         while(beta.compareTo(new BigDecimal(4)) <= 0) {
         //while(beta.compareTo(new BigDecimal(0.1)) <= 0) {
 
-            lambda = beta.divide(new BigDecimal(4));
+            lambda = beta.divide(new BigDecimal(5));
 
             while((lambda.compareTo(beta.multiply(new BigDecimal(2))) <= 0 )&&(lambda.compareTo(new BigDecimal(2)) <= 0)) {
 
