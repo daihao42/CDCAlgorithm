@@ -24,7 +24,8 @@ public class Main {
         BigDecimal beta = new BigDecimal("0.1");
 
         Map<String, Servers.Server> servers_unit = servers.readServer("data/servers_unit.csv");
-        while(beta.compareTo(new BigDecimal(4)) <= 0) {
+        //while(beta.compareTo(new BigDecimal(4)) <= 0) {
+        while(beta.compareTo(new BigDecimal(1)) <= 0) {
 
             lambda = beta.divide(new BigDecimal(4));
 
