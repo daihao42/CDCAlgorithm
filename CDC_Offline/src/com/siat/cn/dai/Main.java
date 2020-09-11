@@ -5,7 +5,7 @@ import com.siat.cn.dai.algorithm.Greedy;
 import com.siat.cn.dai.algorithm.Online;
 import com.siat.cn.dai.base.Requests;
 import com.siat.cn.dai.base.Servers;
-import com.siat.cn.dai.algorithm.DP_BAK;
+import com.siat.cn.dai.algorithm.DPBAK;
 import com.siat.cn.dai.utils.IO;
 
 import java.math.BigDecimal;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Main {
-    public static void main(final String[] args) {
+    public static void main_t(final String[] args) {
         Requests rs = new Requests();
         Servers servers = new Servers();
 
@@ -39,7 +39,7 @@ public class Main {
                 results.add(beta.doubleValue());
 
                 List<Requests.Request> ls = rs.readRequests("data/requests.txt", servers_unit);
-                DP_BAK dp_bak = new DP_BAK(lambda, beta, ls);
+                DPBAK dp_bak = new DPBAK(lambda, beta, ls);
                 long start1 = System.currentTimeMillis();
                 results.add(dp_bak.solution().doubleValue());
                 results.add(Double.valueOf(System.currentTimeMillis() - start1));
@@ -78,17 +78,17 @@ public class Main {
      * test method
      * @param args
      */
-    public static void main_bak(String[] args) {
+    public static void main(String[] args) {
         Requests rs = new Requests();
         Servers servers = new Servers();
         Map<String, Servers.Server> servers_unit = servers.readServer("data/servers_unit.csv");
 
-        BigDecimal lambda = new BigDecimal("0.1");
-        BigDecimal beta = new BigDecimal("2");
+        BigDecimal lambda = new BigDecimal("1.0");
+        BigDecimal beta = new BigDecimal("0.1");
         List<Double> results = new ArrayList<>();
 
         List<Requests.Request> ls = rs.readRequests("data/requests.txt", servers_unit);
-        DP_BAK dp_bak = new DP_BAK(lambda, beta, ls);
+        DPBAK dp_bak = new DPBAK(lambda, beta, ls);
         long start1 = System.currentTimeMillis();
         results.add(dp_bak.solution().doubleValue());
         results.add(Double.valueOf(System.currentTimeMillis() - start1));

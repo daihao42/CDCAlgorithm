@@ -8,7 +8,7 @@ import java.util.Map;
 
 import com.siat.cn.dai.base.Requests.Request;
 
-public class DP_BAK {
+public class DPBAK {
 
     private BigDecimal lambda;
     private BigDecimal beta;
@@ -18,7 +18,7 @@ public class DP_BAK {
     private List<BigDecimal> optC = new ArrayList<>();
     private List<Request> request_list;
 
-    public DP_BAK(BigDecimal lambda, BigDecimal beta, List<Request> request_list){
+    public DPBAK(BigDecimal lambda, BigDecimal beta, List<Request> request_list){
         this.lambda = lambda;
         this.beta = beta;
         this.request_list = request_list;
@@ -77,14 +77,14 @@ public class DP_BAK {
                     }
             }
 
-            // add caching cost or transferring cost
+            // add caching cost or transferring cost (or uploading cost if beta < lambda)
             if(lastReq.get(i.getServerid()) == null){
-                sum = sum.add(this.TransferringCost());
+                sum = sum.add(this.TransferringCost().min(UploadingCost()));
                 res.add(sum);
             }
             else {
                 BigDecimal caching_cost = CachingCost(i.getServer().cost_unit,i.getTime().subtract(lastReq.get(i.getServerid()).getTime()));
-                sum = sum.add(caching_cost.compareTo(TransferringCost()) < 0 ? caching_cost:TransferringCost());
+                sum = sum.add(caching_cost.compareTo(TransferringCost().min(UploadingCost())) < 0 ? caching_cost:TransferringCost().min(UploadingCost()));
                 res.add(sum);
             }
             lastReq.put(i.getServerid(),i);
@@ -102,7 +102,7 @@ public class DP_BAK {
         List<Request> res = new ArrayList<>();
         for(Request i:pi_i.getFeedSet()){
             if(i.getPriorRequest() != null){
-                if((i.getTime().compareTo(pi_j.getTime()) >= 0) & (i.getPriorRequest().getTime().compareTo(pi_j.getTime()) < 0 )){
+                if((i.getTime().compareTo(pi_j.getTime()) >= 0) & (i.getPriorRequest().getTime().compareTo(pi_j.getTime()) <= 0 )){
                     res.add(i);
                 }
             }

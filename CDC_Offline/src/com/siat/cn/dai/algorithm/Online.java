@@ -3,7 +3,6 @@ package com.siat.cn.dai.algorithm;
 import com.siat.cn.dai.base.Requests;
 import com.siat.cn.dai.base.Servers;
 
-import javax.xml.bind.ValidationException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -99,10 +98,10 @@ public class Online {
         this.cached_servers++;
     }
 
-    public void minusCachedServer() throws ValidationException{
+    public void minusCachedServer(){
         this.cached_servers--;
         if(this.cached_servers < 0){
-            throw new ValidationException("cached_server become minus!");
+            System.out.println("cached_server become minus!");
         }
     }
 
@@ -197,11 +196,7 @@ public class Online {
             cost = CachingCost(this.server.getCostUnit(),itime.subtract(this.last_request_time));
             addCost(cost);
             this.cached = Boolean.FALSE;
-            try {
-                minusCachedServer();
-            }catch (Exception e){
-                System.out.println("ValidException!!"+itime.toString());
-            }
+            minusCachedServer();
         }
     }
 
@@ -248,11 +243,7 @@ public class Online {
                 cost = CachingCost(this.server.getCostUnit(), itime.subtract(this.last_request_time));
                 addCost(cost);
                 this.cached = Boolean.FALSE;
-                try {
-                    minusCachedServer();
-                } catch (Exception e) {
-                    System.out.println("ValidException!!" + itime.toString());
-                }
+                minusCachedServer();
                 this.expire_time = new BigDecimal(0);
             }
         }
@@ -327,11 +318,7 @@ public class Online {
                 cost = CachingCost(this.server.getCostUnit(), itime.subtract(this.last_request_time));
                 addCost(cost);
                 this.cached = Boolean.FALSE;
-                try {
-                    minusCachedServer();
-                } catch (Exception e) {
-                    System.out.println("ValidException!!" + itime.toString());
-                }
+                minusCachedServer();
                 this.expire_time = new BigDecimal(0);
             }
         }

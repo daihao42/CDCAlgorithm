@@ -97,12 +97,12 @@ public class DP {
 
             // add caching cost or transferring cost
             if(lastReq.get(i.getServerid()) == null){
-                sum = sum.add(this.TransferringCost());
+                sum = sum.add(this.TransferringCost().min(UploadingCost()));
                 res.add(sum);
             }
             else {
                 BigDecimal caching_cost = CachingCost(i.getServer().cost_unit,i.getTime().subtract(lastReq.get(i.getServerid()).getTime()));
-                sum = sum.add(caching_cost.compareTo(TransferringCost()) < 0 ? caching_cost:TransferringCost());
+                sum = sum.add(caching_cost.compareTo(TransferringCost().min(UploadingCost())) < 0 ? caching_cost:TransferringCost().min(UploadingCost()));
                 res.add(sum);
             }
             lastReq.put(i.getServerid(),i);
