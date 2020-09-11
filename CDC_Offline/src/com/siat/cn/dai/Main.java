@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Main {
-    public static void main_t(final String[] args) {
+    public static void main(final String[] args) {
         Requests rs = new Requests();
         Servers servers = new Servers();
 
@@ -24,8 +24,8 @@ public class Main {
         BigDecimal beta = new BigDecimal("0.1");
 
         Map<String, Servers.Server> servers_unit = servers.readServer("data/servers_unit.csv");
-        //while(beta.compareTo(new BigDecimal(4)) <= 0) {
-        while(beta.compareTo(new BigDecimal(1)) <= 0) {
+        while(beta.compareTo(new BigDecimal(4)) <= 0) {
+        //while(beta.compareTo(new BigDecimal(0.1)) <= 0) {
 
             lambda = beta.divide(new BigDecimal(4));
 
@@ -62,7 +62,7 @@ public class Main {
                 results.add(greedy.solution().doubleValue());
                 results.add(Double.valueOf(System.currentTimeMillis() - start4));
 
-                contents.add(String.format("%f,%f,%f,%f,%f,%f", results.toArray()));
+                contents.add(String.format("%f,%f,%f,%f,%f,%f,%f,%f,%f,%f", results.toArray()));
                 lambda = lambda.add(new BigDecimal("0.01"));
             }
             beta = beta.add(new BigDecimal("0.01"));
@@ -78,7 +78,7 @@ public class Main {
      * test method
      * @param args
      */
-    public static void main(String[] args) {
+    public static void main_t(String[] args) {
         Requests rs = new Requests();
         Servers servers = new Servers();
         Map<String, Servers.Server> servers_unit = servers.readServer("data/servers_unit.csv");
