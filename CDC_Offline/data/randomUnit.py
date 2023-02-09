@@ -14,15 +14,23 @@ servers = df[0].drop_duplicates()
 walk = []
 
 def randomUnit(servers,low,high):
-    random.seed(1)
+    random.seed(3)
     res = defaultdict()
     for i in servers:
         res[i] = round(random.uniform(low,high),2)
     return res
-server_unit = randomUnit(servers.tolist(),1,5)
 
-pd.DataFrame(dict(server_unit),index=[0]).T.to_csv("servers_unit.csv",header=None)
+'''
+for low in range(1,5):
+    for high in range(low,low+5):
+        server_unit = randomUnit(servers.tolist(),low,high)
+
+        pd.DataFrame(dict(server_unit),index=[0]).T.to_csv("servers_unit_{}_{}.csv".format(low,high),header=None)
 #test = pd.DataFrame(dict(server_unit),index=[0]).T
 #test[0] = 2
 #test.loc[min(test.index)] = 1
 #test.to_csv("servers_unit.csv",header=None)
+'''
+
+server_unit = randomUnit(servers.tolist(),0.8,1.6)
+pd.DataFrame(dict(server_unit),index=[0]).T.to_csv("servers_unit_{}_{}.csv".format(0.4,1.6),header=None)

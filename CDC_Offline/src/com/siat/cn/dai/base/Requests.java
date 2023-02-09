@@ -3,10 +3,7 @@ package com.siat.cn.dai.base;
 import com.siat.cn.dai.utils.IO;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Requests {
     public class Request{
@@ -78,5 +75,33 @@ public class Requests {
             tindex++;
         }
         return lr;
+    }
+
+    public List<Request> readRequestsWithSample(String requestfile, Map<String, Servers.Server> serverMap,int samplesize){
+        List<String> lines = IO.readFileByLine(requestfile);
+        List<Request> olr = new ArrayList<>();
+        for(String line : lines){
+            String[] ls = line.split(",");
+            olr.add(new Request(ls[1],serverMap.get(ls[0])));
+        }
+        List<Request> lr = sample(olr,samplesize);
+
+        lr.sort(new Comparator<Request>() {
+            @Override
+            public int compare(Requests.Request o0, Requests.Request o2) {
+                return o0.getTime().compareTo(o2.getTime());
+            }
+        });
+        int tindex = 0;
+        for(Request i:lr){
+            i.setTIndex(tindex);
+            tindex++;
+        }
+        return lr;
+    }
+
+    public List<Request> sample(List<Request> ls, int samplesize){
+        Collections.shuffle(ls);
+        return ls.subList(0,samplesize);
     }
 }
